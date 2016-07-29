@@ -1,0 +1,34 @@
+﻿@model Blog.Models.IndexModel
+
+@{
+    ViewBag.Title = Model.BlogHeader;
+    ViewBag.Message = Model.BlogDescription;
+
+}
+
+<h2>@ViewBag.Title</h2>
+<h3>@ViewBag.Message</h3>
+
+<a href="@Url.Action("NewBlogEdit", "Blog")">Create New Blog</a>
+
+<br><br>
+<b>Read a blog:</b>
+<br>
+@foreach (var item in Model.BlogList)
+{
+    <li>
+        <a href="@Url.Action("Read", "Blog", new { bid = @item.ID})">@item.title</a>
+    </li>
+}
+
+<!--
+<br><br>
+<b>Edit a blog:</b>
+<br>
+@foreach (var item in Model.BlogList)
+{
+    <li>
+        <a href="@Url.Action("BlogEdit", "Blog", new { id = @item.ID})">@item.title</a>
+    </li>
+}
+-->

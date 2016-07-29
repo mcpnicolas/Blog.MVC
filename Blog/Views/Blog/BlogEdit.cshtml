@@ -1,0 +1,38 @@
+﻿@model Blog.Models.BlogModel
+
+@{
+    ViewBag.Title = "Edit Blog: ";
+}
+
+<h2>@ViewBag.Title<b><a href="@Url.Action("Read", "Blog", new { bid = Model.ID })">@Model.header</a></b></h2>
+
+<!--@Html.ActionLink("Return to All Blogs", "Index", "Blog")-->
+
+@using (Html.BeginForm("BlogEdit", "Blog", FormMethod.Post))
+{
+    @Html.ValidationSummary(true)
+    <br>
+    @Html.LabelForModel("ID:  " + Model.ID.ToString())
+    <br><br>
+    <b>Title: </b>@Html.TextBox("title", Model.title)
+    @Html.ValidationMessageFor(m => m.title)
+    <br><br>
+    <b>Author: </b>@Html.TextBox("Author", Model.author)
+    @Html.ValidationMessageFor(m => m.author)
+    <br><br>
+    <b>Posts: </b><a href="@Url.Action("NewPostEdit", "Blog", new { bid = Model.ID })">Create New Post</a>
+    if (Model.content.Count != 0)
+    {
+        foreach (var item in Model.content)
+        {
+        <li>
+            <a href="@Url.Action("PostEdit", "Blog", new { bid = Model.ID, pid = @item.postID })">@item.title</a>
+        </li>
+        }
+    }
+    <br><br>
+    <a href="@Url.Action("DeleteBlog", "Blog", new { bid = Model.ID })">Delete this blog</a>
+    <br><br>
+    <input type="submit" value="Save" />
+}
+

@@ -1,0 +1,38 @@
+﻿@model Blog.Models.PostModel
+
+@{
+    ViewBag.Title = "Edit Post in ";
+}
+
+
+
+<h2>@ViewBag.Title<b><a href="@Url.Action("BlogEdit", "Blog", new { id = Model.blogID })">@Model.blogTitle</a></b></h2>
+
+@using (Html.BeginForm("GoToPost", "Blog", FormMethod.Post))
+{
+    @Html.HiddenFor(m => m.blogID)
+
+    <b>Edit a different post: </b>
+    @Html.DropDownList("Posts", Model.posts, "--Select a post--")
+    <input type="submit" value="Go To Post">
+}
+<br>
+@Html.LabelForModel(Model.headerMessage)
+<br>
+
+@using (Html.BeginForm("PostEdit", "Blog", FormMethod.Post))
+{
+    @Html.ValidationSummary(true)
+
+    @Html.HiddenFor(m => m.blogID)
+    @Html.HiddenFor(m => m.postID)
+
+    <b>Title: </b>@Html.TextBox("Title", Model.title)  <a href="@Url.Action("DeletePost", "Blog", new { bid = Model.blogID, pid = Model.postID })">Delete this post</a>
+    @Html.ValidationMessageFor(m => m.title)
+    <br><br>
+    @Html.TextArea("Body", Model.body, new { rows = "", cols = "", style = "width: 90%; height: 500px;" })
+    <br><br>
+    <input type="submit" value="Save">
+}
+
+

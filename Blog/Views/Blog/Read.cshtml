@@ -1,0 +1,19 @@
+﻿@model Blog.Models.BlogModel
+
+@{
+    ViewBag.Title = Model.title;
+}
+
+<h2>@Html.LabelForModel(Model.title)</h2>
+<h3><b>by </b> @Html.LabelForModel(Model.author)</h3>
+<a href="@Url.Action("BlogEdit", "Blog", new { id = Model.ID })">Edit this blog</a>
+<br><br>
+
+@foreach (var item in Enumerable.Reverse(Model.content))
+{
+    <h3>@item.title</h3>
+    @(Html.LabelForModel(item.body))
+    <br><br>
+}
+
+
